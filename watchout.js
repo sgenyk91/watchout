@@ -30,7 +30,10 @@ var initializeEnemies = function(enemyCount) {
     .attr('cx', function(d) { return d.cx; } )
     .attr('cy', function(d) { return d.cy; } )
     .attr('r', 0)
+    .attr('fill', 'url(#image)')
     .attr('class', 'enemy')
+    .attr('stroke', 'white')
+    .attr('stroke-width', 2)
     .transition().duration(1000)
     .attr('r', 10);
 };
@@ -55,7 +58,9 @@ var initializePlayer = function() {
     .attr('cx', boardWidth / 2)
     .attr('cy', boardHeight / 2)
     .attr('r', 8)
-    .attr('fill', 'red')
+    .attr('stroke', 'black')
+    .attr('stroke-width', 2)
+    .attr('fill', 'white')
     .call(drag);
 };
 
@@ -81,6 +86,7 @@ var isColliding = function() {
   if (hasCollided) incrementCollisions();
   return hasCollided;
 };
+
 var incrementCollisions = function() {
   var span = document.getElementById('collisions').children[0];
   var catcher = Number(span.innerHTML);
@@ -113,7 +119,7 @@ initializeEnemies(30);
 initializePlayer();
 setInterval(isColliding, 50);
 setInterval(updateEnemies.bind(null, 30), 2000);
-setInterval(incrementCurrentScore, 10);
+setInterval(incrementCurrentScore, 1);
 
 
 
