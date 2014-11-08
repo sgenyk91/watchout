@@ -45,7 +45,7 @@ var updateEnemies = function(enemyCount) {
 
   d3.selectAll('.enemy')
     .data(newPosition)
-    .transition().duration(2000)
+    .transition().duration(1000)
     .attr('cx', function(d) { return d.cx; } )
     .attr('cy', function(d) { return d.cy; } );
 };
@@ -59,12 +59,35 @@ var initializePlayer = function() {
     .call(drag);
 };
 
+var isColliding = function() {
+  var enemies = d3.selectAll('.enemy');
+  var player = d3.select('#player');
+
+  var playerX = player.attr('cx');
+  var playerY = player.attr('cy');
+  var playerRadius = Number(player.attr('r') );
+
+  var hasCollided = false;
+
+  enemies.each(function(d, i) {
+    var enemyX = this.getAttribute('cx');
+    var enemyY = this.getAttribute('cy');
+    var enemyRadius = 10;
+
+    var distance = Math.sqrt(Math.pow((playerX - enemyX), 2) + Math.pow((playerY - enemyY), 2));
+    var combinedRadii = playerRadius + enemyRadius;
+    if (distance < (combinedRadii) ) hasCollided = true;
+  });
+  return hasCollided;
+};
 
 
-
-initializeEnemies(30);
+initializeEnemies(1);
 initializePlayer();
-setInterval(updateEnemies.bind(null, 30), 2000);
+setInterval(isColliding, 50);
+setInterval(  updateEnemies.bind(null, 1), 2000);
+
+
 
 
 
