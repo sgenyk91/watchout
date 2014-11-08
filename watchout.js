@@ -26,16 +26,21 @@ var initializeEnemies = function(enemyCount) {
     .selectAll('.enemy')
     .data(enemyData)
     .enter()
-    .append('circle')
-    .attr('cx', function(d) { return d.cx; } )
-    .attr('cy', function(d) { return d.cy; } )
-    .attr('r', 0)
-    .attr('fill', 'url(#image)')
+    .append('image')
+    .attr('x', function(d) { return d.cx; } )
+    .attr('y', function(d) { return d.cy; } )
+    .attr('xlink:href', 'asteroid.png')
+    .attr('height', 0)
+    .attr('width', 0)
+    // .attr('r', 0)
+    // .attr('fill', 'url(#image)')
     .attr('class', 'enemy')
-    .attr('stroke', 'white')
-    .attr('stroke-width', 2)
+    // .attr('stroke', 'white')
+    // .attr('stroke-width', 2)
     .transition().duration(1000)
-    .attr('r', 10);
+    // .attr('r', 10);
+    .attr('height', 25)
+    .attr('width', 25);
 };
 
 var updateEnemies = function(enemyCount) {
@@ -49,8 +54,8 @@ var updateEnemies = function(enemyCount) {
   d3.selectAll('.enemy')
     .data(newPosition)
     .transition().duration(1000)
-    .attr('cx', function(d) { return d.cx; } )
-    .attr('cy', function(d) { return d.cy; } );
+    .attr('x', function(d) { return d.cx; } )
+    .attr('y', function(d) { return d.cy; } );
 };
 
 var initializePlayer = function() {
@@ -80,8 +85,8 @@ var isColliding = function() {
   var hasCollided = false;
 
   enemies.each(function(d, i) {
-    var enemyX = this.getAttribute('cx');
-    var enemyY = this.getAttribute('cy');
+    var enemyX = this.getAttribute('x');
+    var enemyY = this.getAttribute('y');
     var enemyRadius = 10;
 
     var distance = Math.sqrt(Math.pow((playerX - enemyX), 2) + Math.pow((playerY - enemyY), 2));
