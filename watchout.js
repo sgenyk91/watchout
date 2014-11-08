@@ -78,14 +78,42 @@ var isColliding = function() {
     var combinedRadii = playerRadius + enemyRadius;
     if (distance < (combinedRadii) ) hasCollided = true;
   });
+  if (hasCollided) incrementCollisions();
   return hasCollided;
 };
+var incrementCollisions = function() {
+  var span = document.getElementById('collisions').children[0];
+  var catcher = Number(span.innerHTML);
+  span.innerHTML = (catcher + 1).toString();
+  updateHighScore();
+};
 
+var incrementCurrentScore = function() {
+  var spanHigh = document.getElementById('high').children[0];
+  var spanCurrent = document.getElementById('current').children[0];
 
-initializeEnemies(1);
+  var catcherCurrent = Number(spanCurrent.innerHTML);
+  spanCurrent.innerHTML = (catcherCurrent + 1).toString();
+
+  if (catcherCurrent > Number(spanHigh.innerHTML) ) {
+    spanHigh.innerHTML = spanCurrent.innerHTML;
+  }
+};
+
+var updateHighScore = function() {
+  var spanHigh = document.getElementById('high').children[0];
+  var spanCurrent = document.getElementById('current').children[0];
+  if (Number(spanCurrent.innerHTML) > Number(spanHigh.innerHTML)) {
+    spanHigh.innerHTML = Number(spanCurrent.innerHTML);
+  }
+  spanCurrent.innerHTML = 0;
+};
+
+initializeEnemies(30);
 initializePlayer();
 setInterval(isColliding, 50);
-setInterval(  updateEnemies.bind(null, 1), 2000);
+setInterval(updateEnemies.bind(null, 30), 2000);
+setInterval(incrementCurrentScore, 10);
 
 
 
