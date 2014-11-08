@@ -60,8 +60,13 @@ var initializePlayer = function() {
     .attr('r', 8)
     .attr('stroke', 'black')
     .attr('stroke-width', 2)
-    .attr('fill', 'white')
-    .call(drag);
+    .attr('fill', 'white');
+    // .call(drag);
+
+  d3.select('svg').on('mousemove', function() {
+    var coor = d3.mouse(this);
+    d3.select('#player').attr('cx', coor[0]).attr('cy', coor[1]);;
+  });
 };
 
 var isColliding = function() {
